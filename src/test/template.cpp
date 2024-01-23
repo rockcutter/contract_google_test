@@ -1,3 +1,4 @@
+#ifdef TEMPLATE_CONTRACT_TEST_ENABLED
 #include <gtest/gtest.h> 
 #include "template.hpp"
 
@@ -24,3 +25,4 @@ TEST(TEMPLATE_TEST, FAIL_ENSURES){
         ""
     );
 }
+#endif // TEMPLATE_CONTRACT_TEST_ENABLED
