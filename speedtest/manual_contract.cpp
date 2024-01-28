@@ -3,20 +3,6 @@
 #include <cmath>
 #include <climits>
 
-//constexpr int FUNC_FORLOOP_COUNT = 10000000;
-
-double mysqrt(double n)
-	[[expects: n >= 0]]
-	[[ensures r: r >= 0]]
-{
-	 // 平方根を求める処理
-	 return std::sqrt(n);
-}
-double mysqrt_noattr(double n)
-{
-	 // 平方根を求める処理
-	 return std::sqrt(n);
-}
 double internalfunc(double n)
 {
 	return std::sqrt(n);
@@ -27,17 +13,11 @@ double mysqrt_with_manual_postcond(double n)
 		abort();
 	}
 	// 平方根を求める処理
-	auto r = internalfunc(n);
+	auto r = sqrt(n);
 	if(!(r >= 0)){
 	 abort();
 	}
 	return r;
-}
-
-void assert_gt_20(int n)
-{
-    //nが20より大きいことを表明する
-    [[assert: n > 20]];
 }
 
 int main(){
@@ -57,29 +37,9 @@ int main(){
 	}
 
 	end = std::chrono::system_clock::now();  
-	attr_elapsed = std::chrono::duration_cast<TestDuration>(end-start).count(); 
-
-	start = std::chrono::system_clock::now(); 
-
-	for(int i = 0; i < MAX_TIMECHECK_COUNT; i++){
-		mysqrt_noattr(2);
-	}
-
-	end = std::chrono::system_clock::now();  
 	elapsed = std::chrono::duration_cast<TestDuration>(end-start).count(); 
 
-	start = std::chrono::system_clock::now(); 
-
-	for(int i = 0; i < MAX_TIMECHECK_COUNT; i++){
-		mysqrt(2);
-	}
-
-	end = std::chrono::system_clock::now();  
-	checked = std::chrono::duration_cast<TestDuration>(end-start).count(); 
-
-	std::cout << "attr_elapsed: " << attr_elapsed << std::endl;
-	std::cout << "elapsed: " << elapsed << std::endl;
-	std::cout << "checked: " << checked << std::endl;
+	std::cout << "manual_contract: " << elapsed << std::endl;
 
 	return 0;
 }
